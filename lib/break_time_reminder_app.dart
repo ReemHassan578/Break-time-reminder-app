@@ -7,22 +7,38 @@ import 'core/theming/colors.dart';
 
 class BreakTimeReminderApp extends StatelessWidget {
   final AppRouter appRouter;
-  const BreakTimeReminderApp({super.key,required this.appRouter}) ;
+  const BreakTimeReminderApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(375, 812),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        builder: (context, child) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                 MyColors.lightMint // Mint
+                  Colors.white, 
+                ],
+              ),
+            ),
+            child: child, 
+          );
+        },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme:const ColorScheme.light(primary: MyColors.defaultColor),
-          scaffoldBackgroundColor: Colors.white,
+          colorScheme: const ColorScheme.light(primary: MyColors.defaultColor),
+           scaffoldBackgroundColor:
+           // Set transparent to apply gradient manually
+              Colors.transparent, 
           useMaterial3: true,
         ),
-       
         initialRoute: Routes.onBoardingScreen,
         onGenerateRoute: appRouter.generateRoute,
       ),

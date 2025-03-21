@@ -1,7 +1,5 @@
-import 'package:break_time_reminder_app/core/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theming/styles.dart';
 import '../widgets/animated_lottie_image_box.dart';
 import '../widgets/get_started_filled_button.dart';
 import '../widgets/text_quotes.dart';
