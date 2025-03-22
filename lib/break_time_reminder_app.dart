@@ -2,6 +2,7 @@ import 'package:break_time_reminder_app/core/routing/app_router.dart';
 import 'package:break_time_reminder_app/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'core/theming/colors.dart';
 
@@ -23,7 +24,7 @@ class BreakTimeReminderApp extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                 MyColors.lightMint // Mint
+                 MyColors.mint ,
                   Colors.white, 
                 ],
               ),
@@ -31,8 +32,10 @@ class BreakTimeReminderApp extends StatelessWidget {
             child: child, 
           );
         },
+
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          textTheme: GoogleFonts.senTextTheme(),
           colorScheme: const ColorScheme.light(primary: MyColors.defaultColor),
            scaffoldBackgroundColor:
            // Set transparent to apply gradient manually

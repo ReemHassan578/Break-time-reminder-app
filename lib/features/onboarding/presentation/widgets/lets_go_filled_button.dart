@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theming/colors.dart';
-class GetStartedFilledButton extends StatelessWidget {
-  const GetStartedFilledButton({
+import '../../../../core/theming/styles.dart';
+class LetsGoFilledButton extends StatelessWidget {
+  const LetsGoFilledButton({
     super.key,
   });
 
@@ -21,8 +22,8 @@ class GetStartedFilledButton extends StatelessWidget {
           backgroundColor: MyColors.defaultColor,
         ),
         onPressed: () {},
-        child: Text('Get Started'),
-      ),
+        child: Text('Let’s Go!',style: MyTextStyles.font14WhiteBold,),
+      ),  
     );
   }
 }

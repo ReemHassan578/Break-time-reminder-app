@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/animated_lottie_image_box.dart';
-import '../widgets/get_started_filled_button.dart';
+import '../widgets/lets_go_filled_button.dart';
 import '../widgets/text_quotes.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             AnimatedLottieImageBox(),
             TextQuotes(),
-            GetStartedFilledButton(),
+            LetsGoFilledButton(),
           ],
         ),
       ),

@@ -5,14 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyTextStyles {
-  static TextStyle font20BlackRegular = GoogleFonts.playfairDisplay(
+  static TextStyle font20BlackRegularPlayFairFont = GoogleFonts.playfairDisplay(
     fontSize: 20.sp,
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
-  static TextStyle font25BlackBold = GoogleFonts.pacifico(
+  static TextStyle font25BlackBoldPacificoFont = GoogleFonts.pacifico(
     fontSize: 25.sp,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
+
+
+  static TextStyle font14WhiteBold = TextStyle(
+    fontSize: 14.sp,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );  
 }

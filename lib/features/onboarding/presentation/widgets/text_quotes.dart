@@ -19,11 +19,11 @@ class TextQuotes extends StatelessWidget {
           children: [
             Text(
               'Take Smart Breaks!',
-              style: MyTextStyles.font25BlackBold,
+              style: MyTextStyles.font25BlackBoldPacificoFont,
             ),
             Text(
               "Stay productive and healthy with scheduled break reminders.",
-              style: MyTextStyles.font20BlackRegular.copyWith(shadows: [
+              style: MyTextStyles.font20BlackRegularPlayFairFont.copyWith(shadows: [
                 Shadow(
                   blurRadius: 1,
                 ),
