@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 class LetsGoFilledButton extends StatelessWidget {
@@ -21,7 +22,9 @@ class LetsGoFilledButton extends StatelessWidget {
           ),
           backgroundColor: MyColors.defaultColor,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, Routes.homeScreen);
+        },
         child: Text('Let’s Go!',style: MyTextStyles.font14WhiteBold,),
       ),  
     );

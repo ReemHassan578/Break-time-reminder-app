@@ -10,16 +10,22 @@ class MyTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
+
   static TextStyle font25BlackBoldPacificoFont = GoogleFonts.pacifico(
     fontSize: 25.sp,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle font18BlackNormalPacificoFont = GoogleFonts.pacifico(
+    fontSize: 18.sp,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
 
   static TextStyle font14WhiteBold = TextStyle(
     fontSize: 14.sp,
     color: Colors.white,
     fontWeight: FontWeight.bold,
-  );  
+  );
 }
