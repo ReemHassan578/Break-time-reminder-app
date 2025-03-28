@@ -6,7 +6,7 @@ class TimerNotifier extends StateNotifier<StopWatchTimer> {
   TimerNotifier()
       : super(StopWatchTimer(
           mode: StopWatchMode.countDown,
-          presetMillisecond: StopWatchTimer.getMilliSecFromSecond(7),
+          presetMillisecond: StopWatchTimer.getMilliSecFromSecond(0),
           onChange: (value) => debugPrint('onChange $value'),
           onStopped: () {
             debugPrint('onStopped');
@@ -16,21 +16,22 @@ class TimerNotifier extends StateNotifier<StopWatchTimer> {
           },
         ));
 
-  void setBreakTime() {
+  void setBreakTime(int time) {
+    state.setPresetTime(mSec: 0,add: false);
     state.onStartTimer();
+    state.setPresetMinuteTime(time);
   }
 
-   void resetBreakTime() {
+  void resetBreakTime() {
     state.onResetTimer();
   }
 
-Future<void> disposeTimer() async{
-   await state.dispose();
+  Future<void> disposeTimer() async {
+    await state.dispose();
   }
 }
 
-final timerProvider =
-    StateNotifierProvider<TimerNotifier,StopWatchTimer>(
+final timerProvider = StateNotifierProvider<TimerNotifier, StopWatchTimer>(
   (ref) {
     return TimerNotifier();
   },

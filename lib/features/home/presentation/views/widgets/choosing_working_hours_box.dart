@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'break_occurrence_wheel.dart';
 import 'working_hours_wheel_list.dart';
 
 class ChoosingWorkingHoursBox extends StatelessWidget {
@@ -22,6 +23,7 @@ class ChoosingWorkingHoursBox extends StatelessWidget {
           children: [
             WorkingHoursWheelList(type: 'from'),
             WorkingHoursWheelList(type: 'to'),
+            BreakOccurrenceWheel(),
           ],
         ),
       ],

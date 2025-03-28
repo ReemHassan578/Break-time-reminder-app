@@ -4,6 +4,7 @@ import 'package:break_time_reminder_app/features/home/presentation/views/widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../widgets/work_or_break_lottie_image.dart';
 import '../widgets/choosing_working_hours_box.dart';
 import '../widgets/count_down_timer.dart';
 import '../widgets/reset_break_timer_button.dart';
@@ -23,21 +24,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          spacing: 40.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ChoosingWorkingHoursBox(),
-            ChoosingBreakDuration(),
-            CountDownTimer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 20.h),
+            child: Column(
+              //       spacing: 15.h,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SetBreakTimeButton(),
-                ResetBreakTimerButton(),
+                CountDownTimer(),
+                ChoosingWorkingHoursBox(),
+                WorkOrBreakLottieImage(),
+                ChoosingBreakDuration(),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SetBreakTimeButton(),
+                      ResetBreakTimerButton(),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -23,15 +23,19 @@ class ChoosingBreakDuration extends ConsumerWidget{
         Slider(
           value: breakDuration.toDouble(),
           min: 0,
-          max: 60,
-          divisions: 12, 
-          label: "$breakDuration  min",
-          onChanged: (value) {
+          max: 120,
+          divisions: 24, 
+ label: breakDuration >= 60
+      ? "${breakDuration ~/ 60} hr ${breakDuration % 60} min"
+      : "$breakDuration min",
+                onChanged: (value) {
             ref.read(breakDurationProvider.notifier).setBreakDuration(value.toInt());
           },
         ),
         Text(
-          " $breakDuration min",
+           breakDuration >= 60
+      ? "${breakDuration ~/ 60} hr ${breakDuration % 60} min"
+      : "$breakDuration min",
           style: MyTextStyles.font18BlackNormalPacificoFont,
         ),
       ],

@@ -40,6 +40,9 @@ dependencies:
   google_fonts: ^6.2.1
   stop_watch_timer: ^3.2.1
   flutter_riverpod: ^2.6.1
+  flutter_local_notifications: ^19.0.0
+  timezone: ^0.10.0
+  flutter_timezone: ^4.1.0
   
 
 dev_dependencies:
