@@ -1,20 +1,38 @@
 import 'package:break_time_reminder_app/core/theming/colors.dart';
 import 'package:break_time_reminder_app/core/theming/styles.dart';
 import 'package:break_time_reminder_app/features/home/presentation/manager/break_occurrence_provider.dart';
-import 'package:break_time_reminder_app/features/home/presentation/manager/working_hours_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../manager/break_duration_provider.dart';
 
-class BreakOccurrenceWheel extends ConsumerWidget {
+class BreakOccurrenceWheel extends ConsumerStatefulWidget {
   const BreakOccurrenceWheel({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+ ConsumerState<BreakOccurrenceWheel>   createState() => _BreakOccurrenceWheelState();
+}
+
+class _BreakOccurrenceWheelState extends ConsumerState<BreakOccurrenceWheel> {
+  late FixedExtentScrollController _scrollController;
+
+ 
+  
+@override
+  void initState() {
+
+    super.initState();
+    _scrollController = FixedExtentScrollController(
+        initialItem:( ref.read(breakOccurrenceProvider)-1) ~/ 30);
+  
+
+
+  }
+  @override
+  Widget build(BuildContext context, ) {
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -26,6 +44,7 @@ class BreakOccurrenceWheel extends ConsumerWidget {
           SizedBox(
             height: 100.h,
             child: ListWheelScrollView.useDelegate(
+              controller: _scrollController,
               itemExtent: 40.h,
               physics: FixedExtentScrollPhysics(),
               onSelectedItemChanged: (index) {
@@ -50,9 +69,7 @@ class BreakOccurrenceWheel extends ConsumerWidget {
                           : Colors.black38,
                     ),
 
-                    // color: ref.watch(workingHoursProvider)[type] == index
-                    //     ? MyColors.defaultColor
-                    //     : Colors.black38,
+                
                   );
                 },
                 childCount: 24,

@@ -12,42 +12,45 @@ class CountDownTimer extends ConsumerStatefulWidget {
 }
 
 class _CountDownTimerState extends ConsumerState<CountDownTimer> {
+  late final TimerNotifier timerNotifier;
+  @override
+  void initState() {
+    super.initState();
+    timerNotifier = ref.read(timerProvider.notifier);
+  }
 
   @override
   Widget build(BuildContext context) {
     final timerRef = ref.watch(timerProvider);
-    return  StreamBuilder<int>(
-            stream: timerRef.rawTime,
-            initialData: timerRef.rawTime.value,
-            builder: (context, snap) {
-              final value = snap.data!;
-              final displayTime =
-                  StopWatchTimer.getDisplayTime(value, milliSecond: false,);
-                   final int hours = StopWatchTimer.getRawHours(value);
-              final int minutes = StopWatchTimer.getRawMinute(value);
-              final int seconds = StopWatchTimer.getRawSecond(value);
-              return Column(children: [
-                
-                Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
-                  child: Text(
-                    displayTime,
-                    style:  TextStyle(
-                      fontSize: 40.sp,
-                      fontFamily: 'Helvetica',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+    return StreamBuilder<int>(
+        stream: timerRef.rawTime,
+        initialData: timerRef.rawTime.value,
+        builder: (context, snap) {
+          final value = snap.data!;
+          final displayTime = StopWatchTimer.getDisplayTime(
+            value,
+            milliSecond: false,
+          );
+
+          return Column(children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+              child: Text(
+                displayTime,
+                style: TextStyle(
+                  fontSize: 40.sp,
+                  fontFamily: 'Helvetica',
+                  fontWeight: FontWeight.bold,
                 ),
-              ]);
-            });
+              ),
+            ),
+          ]);
+        });
   }
-
-
 
   @override
   void dispose() async {
     super.dispose();
-    await ref.read(timerProvider.notifier).disposeTimer(); // Need to call dispose function.
+    await timerNotifier.disposeTimer(); // Need to call dispose function.
   }
 }

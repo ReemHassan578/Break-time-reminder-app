@@ -9,7 +9,9 @@ import 'core/theming/colors.dart';
 
 class BreakTimeReminderApp extends StatelessWidget {
   final AppRouter appRouter;
-  const BreakTimeReminderApp({super.key, required this.appRouter});
+   static  final GlobalKey<NavigatorState> navigatorKey= GlobalKey<NavigatorState>() ;
+
+  const BreakTimeReminderApp({super.key, required this.appRouter,});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class BreakTimeReminderApp extends StatelessWidget {
                 Colors.transparent, 
             useMaterial3: true,
           ),
+          navigatorKey:navigatorKey ,
           initialRoute: Routes.onBoardingScreen,
           onGenerateRoute: appRouter.generateRoute,
         ),

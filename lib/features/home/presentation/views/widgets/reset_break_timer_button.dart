@@ -10,11 +10,12 @@ class ResetBreakTimerButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+   // var timerRef=ref.read(timerProvider.notifier);
+
     return FilledButton(
         onPressed: () {
-          ref.read(timerProvider.notifier).resetBreakTime();
+          ref.read(timerProvider.notifier).resetTimer();
           LocalNotificationHelper.cancelAllNotification();
-                    ref.read(statusWorkOrBreakProvider.notifier).startWorking();
 
         },
         child: Text('reset'));

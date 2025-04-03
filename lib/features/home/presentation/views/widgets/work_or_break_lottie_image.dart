@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../../core/helpers/hive_helper.dart';
+
 class WorkOrBreakLottieImage extends ConsumerWidget {
   const WorkOrBreakLottieImage({
     super.key,
@@ -11,14 +13,16 @@ class WorkOrBreakLottieImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+   // bool? isBreak=HiveHelper.isBreakTimeBox.get('isBreakTime');
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
       child: SizedBox(
         height: 240.h,
         width: 240.w,
         child: Lottie.asset(
-          ref.watch(
-            statusWorkOrBreakProvider)==StatusWorkOrBreak.working?'assets/images/work.json'
+           ref.watch(
+            statusWorkOrBreakProvider)==StatusWorkOrBreak.working?
+'assets/images/work.json'
           :'assets/images/coffee.json',
           fit: BoxFit.fill,
           width: double.infinity,

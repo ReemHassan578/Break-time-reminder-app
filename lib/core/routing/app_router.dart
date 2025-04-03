@@ -1,8 +1,9 @@
 
+import 'package:break_time_reminder_app/features/notification/presentation/views/notification_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/home/presentation/views/screens/home_screen.dart';
-import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/home/presentation/views/home_screen.dart';
+import '../../features/onboarding/presentation/views/onboarding_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -18,6 +19,12 @@ case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (context) {
             return  HomeScreen();
+          },
+        );
+        case Routes.notificationScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            return  NotificationScreen();
           },
         );
 

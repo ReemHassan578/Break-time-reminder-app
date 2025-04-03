@@ -1,12 +1,16 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/routing/routes.dart';
-import '../../../../core/theming/colors.dart';
-import '../../../../core/theming/styles.dart';
-class LetsGoFilledButton extends StatelessWidget {
-  const LetsGoFilledButton({
-    super.key,
+
+import '../theming/colors.dart';
+import '../theming/styles.dart';
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final Function() onPressed;
+  const CustomButton({
+    super.key, required this.text, required this.onPressed,
   });
 
   @override
@@ -22,10 +26,8 @@ class LetsGoFilledButton extends StatelessWidget {
           ),
           backgroundColor: MyColors.defaultColor,
         ),
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.homeScreen);
-        },
-        child: Text('Let’s Go!',style: MyTextStyles.font14WhiteBold,),
+        onPressed: onPressed,
+        child: Text(text,style: MyTextStyles.font14WhiteBold,),
       ),  
     );
   }
