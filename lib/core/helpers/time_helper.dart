@@ -1,7 +1,5 @@
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-  import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
 Duration getRemainingTime(String nextBreakTime) {
     DateTime parsedDate =

@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:timezone/timezone.dart';
 
 part 'notification_model.g.dart';
 

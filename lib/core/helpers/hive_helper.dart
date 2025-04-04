@@ -8,6 +8,8 @@ class HiveHelper {
  static late Box<NotificationModel> notificationBox;
  static late Box<WorkSessionModel> workSessionBox;
  static late Box<bool> isBreakTimeBox;
+ static late Box<String> breakEndNotificationTimeBox;
+
 
   static Future<void> init() async {
 
@@ -18,6 +20,8 @@ class HiveHelper {
     notificationBox=await Hive.openBox<NotificationModel>('notificationBox');
     workSessionBox=await Hive.openBox<WorkSessionModel>('workSessionBox');
     isBreakTimeBox=await Hive.openBox<bool>('isBreakTimeBox');
+    breakEndNotificationTimeBox=await Hive.openBox<String>('breakEndNotificationTimeBox');
+
   }
 
 static bool  get hasScheduledNotification => notificationBox.isNotEmpty;

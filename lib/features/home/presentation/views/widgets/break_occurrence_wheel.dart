@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../manager/break_duration_provider.dart';
+import '../../manager/timer_provider.dart';
 
 class BreakOccurrenceWheel extends ConsumerStatefulWidget {
   const BreakOccurrenceWheel({
@@ -33,6 +33,7 @@ class _BreakOccurrenceWheelState extends ConsumerState<BreakOccurrenceWheel> {
   }
   @override
   Widget build(BuildContext context, ) {
+   var isTimerRunning = ref.watch(timerProvider).isRunning;
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -46,7 +47,7 @@ class _BreakOccurrenceWheelState extends ConsumerState<BreakOccurrenceWheel> {
             child: ListWheelScrollView.useDelegate(
               controller: _scrollController,
               itemExtent: 40.h,
-              physics: FixedExtentScrollPhysics(),
+              physics: isTimerRunning?NeverScrollableScrollPhysics():FixedExtentScrollPhysics(),
               onSelectedItemChanged: (index) {
                 ref
                     .read(breakOccurrenceProvider.notifier)

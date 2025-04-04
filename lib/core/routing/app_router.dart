@@ -24,7 +24,8 @@ case Routes.homeScreen:
         case Routes.notificationScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return  NotificationScreen();
+            var args = settings.arguments as Map<String, dynamic>;
+            return  NotificationScreen(isFromNotification: args['isFromNotification'],);
           },
         );
 

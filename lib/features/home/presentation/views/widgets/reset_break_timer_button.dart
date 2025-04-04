@@ -15,7 +15,7 @@ class ResetBreakTimerButton extends ConsumerWidget {
     return FilledButton(
         onPressed: () {
           ref.read(timerProvider.notifier).resetTimer();
-          LocalNotificationHelper.cancelAllNotification();
+          LocalNotificationHelper.cancelAllNotifications();
 
         },
         child: Text('reset'));

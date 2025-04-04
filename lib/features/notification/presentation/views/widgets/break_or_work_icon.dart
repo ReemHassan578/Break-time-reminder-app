@@ -15,7 +15,7 @@ class BreakOrWorkIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Icon(
-      isBreakTime ? Icons.work : Icons.coffee,
+      !isBreakTime ? Icons.work : Icons.coffee,
       size: 100.sp,
       color: MyColors.defaultColor.withAlpha(180),
     );

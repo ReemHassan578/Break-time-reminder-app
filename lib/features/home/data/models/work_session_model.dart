@@ -5,20 +5,22 @@ part 'work_session_model.g.dart'; // Run `flutter pub run build_runner build` to
 @HiveType(typeId: 1)
 class WorkSessionModel {
   @HiveField(0)
-  final int workFrom; 
+  final int workFrom;
 
   @HiveField(1)
   final int workTo;
 
   @HiveField(2)
   // In minutes
-  final int breakDuration; 
+  final int breakDuration;
 
- @HiveField(3)
+  @HiveField(3)
   // In minutes
-  final int breakOccurrence; 
+  final int breakOccurrence;
 
-
-
-  WorkSessionModel({required this.workFrom, required this.workTo, required this.breakDuration, required this.breakOccurrence});
+  WorkSessionModel( 
+      {required this.workFrom,
+      required this.workTo,
+      required this.breakDuration,
+      required this.breakOccurrence});
 }

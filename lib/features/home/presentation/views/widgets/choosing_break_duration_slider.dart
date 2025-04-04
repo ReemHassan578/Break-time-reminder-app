@@ -4,13 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theming/styles.dart';
+import '../../manager/timer_provider.dart';
 
-class ChoosingBreakDuration extends ConsumerWidget{
-  const ChoosingBreakDuration({super.key});
+class ChoosingBreakDurationSlider extends ConsumerWidget{
+  const ChoosingBreakDurationSlider({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     int breakDuration = ref.watch(breakDurationProvider);
+            var isTimerRunning = ref.watch(timerProvider).isRunning;
+
     return Column(
       children: [
         Text(
@@ -21,14 +24,14 @@ class ChoosingBreakDuration extends ConsumerWidget{
               fontWeight: FontWeight.w500),
         ),
         Slider(
-          value: breakDuration.toDouble(),
+          value:  breakDuration.toDouble(),
           min: 0,
           max: 120,
           divisions: 24, 
  label: breakDuration >= 60
       ? "${breakDuration ~/ 60} hr ${breakDuration % 60} min"
       : "$breakDuration min",
-                onChanged: (value) {
+                onChanged: isTimerRunning?null:(value) {
             ref.read(breakDurationProvider.notifier).setBreakDuration(value.toInt());
           },
         ),

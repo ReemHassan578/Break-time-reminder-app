@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/helpers/hive_helper.dart';
 
+
 class BreakDurationNotifier extends StateNotifier<int> {
   BreakDurationNotifier() : super(20) {
     _loadFromHive();
@@ -12,14 +13,15 @@ class BreakDurationNotifier extends StateNotifier<int> {
   }
 
   void _loadFromHive() {
+   
     int? breakDuration =
         HiveHelper.workSessionBox.get('session')?.breakDuration;
     state = breakDuration ?? 20;
-
     HiveHelper.workSessionBox.watch(key: 'session').listen((event) {
-      state = event.value == null ? 20 : breakDuration!;
+      state = event.value == null ? 20 : state;
     });
   }
+
 }
 
 final breakDurationProvider = StateNotifierProvider<BreakDurationNotifier, int>(

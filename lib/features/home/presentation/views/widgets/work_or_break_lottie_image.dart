@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../../core/helpers/hive_helper.dart';
-
 class WorkOrBreakLottieImage extends ConsumerWidget {
   const WorkOrBreakLottieImage({
     super.key,

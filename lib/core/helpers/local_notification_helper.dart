@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:break_time_reminder_app/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,74 +17,103 @@ class LocalNotificationHelper {
   static late final FlutterLocalNotificationsPlugin
       flutterLocalNotificationsPlugin;
 
-  static Future<void> init() async {
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    await _initTimeZone();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
-    final DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings();
-
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin,
+  static Future<void> initializeNotifications() async {
+    final initializationSettings = InitializationSettings(
+      android: const AndroidInitializationSettings('app_icon'),
+      iOS: const DarwinInitializationSettings(),
     );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    await _initializeTimeZone();
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
     );
+   
   }
 
-  static Future<void> _initTimeZone() async {
+  /// Initializes the time zone for the local notifications plugin.
+  static Future<void> _initializeTimeZone() async {
     tz.initializeTimeZones();
-    final String timeZoneName = await FlutterTimezone.getLocalTimezone();
-
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
-    // print(tz.TZDateTime.now(tz.local));
+    final timeZone = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
   }
 
   static void _onDidReceiveNotificationResponse(
       NotificationResponse notificationResponse) async {
     final String? payload = notificationResponse.payload;
-    if (notificationResponse.payload != null) {
+    if (payload != null) {
       debugPrint('notification payload: $payload');
     }
 
-    final bool? isBreakTime = HiveHelper.isBreakTimeBox.get('isBreakTime');
-    if (isBreakTime == true) {
+    final isBreakTime = HiveHelper.isBreakTimeBox.get('isBreakTime') ?? false;
+    final workSession = HiveHelper.workSessionBox.values.first;
+  
+  
+  final NotificationAppLaunchDetails? details =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+   
+ if (details?.didNotificationLaunchApp ?? false) {
+      log('App launched from notification');
+    }else{
+      log('App launched normally');
+    }
+    if (isBreakTime) {
       HiveHelper.isBreakTimeBox.put('isBreakTime', false);
+      
     } else {
-      var breakDuration = HiveHelper.workSessionBox.values.first.breakDuration;
-      var workFrom = HiveHelper.workSessionBox.values.first.workFrom;
-      var workTo = HiveHelper.workSessionBox.values.first.workTo;
-      var timeNow = TimeOfDay.now();
+      final breakDuration = workSession.breakDuration;
+      final timeNow = TimeOfDay.now();
+      final workTo = workSession.workTo;
 
+     if (HiveHelper.notificationBox.isNotEmpty) {
+      HiveHelper.notificationBox.deleteAt(0);
+    }
       HiveHelper.isBreakTimeBox.put('isBreakTime', true);
       scheduleBreakNotifications(
-          breakDuration,
-          TimeOfDay(hour: workFrom, minute: timeNow.minute),
-          TimeOfDay(hour: workTo, minute: timeNow.minute),
-          isForBreakEnd: true);
+        breakDuration,
+        timeNow,
+        TimeOfDay(hour: workTo, minute: 0),
+        isForBreakEnd: true,
+      );
+         
     }
 
     BreakTimeReminderApp.navigatorKey.currentState?.pushReplacementNamed(
       Routes.notificationScreen,
+      arguments: {
+       'isFromNotification': details?.didNotificationLaunchApp
+      }
     );
 
-    // HiveHelper.notificationBox.values.first.removeAt(0);
+    
   }
 
-  static Future<void> cancelAllNotification() async {
+  static Future<void> fetchAllNotifications() async {
+    final List<PendingNotificationRequest> pendingNotifications =
+ 
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+    for (final notification in pendingNotifications) {
+
+      
+      // Process the notification details as needed
+      print(
+          " Title: ${notification.title}, Body: ${notification.body}, Payload: ${notification.payload}");
+    }
+  }
+
+  /// Cancels all scheduled notifications and clears the notification box.
+  static Future<void> cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
-    HiveHelper.notificationBox.clear();
-    HiveHelper.isBreakTimeBox.clear();
+    await HiveHelper.notificationBox.clear();
+    await HiveHelper.isBreakTimeBox.clear();
   }
 
-  static void scheduleBreakNotifications(
+  static Future<void> scheduleBreakNotifications(
       int breakOccurrenceInMinutes, TimeOfDay startTime, TimeOfDay endTime,
-      {bool? isForBreakEnd}) async {
+      {int? breakDuration, bool? isForBreakEnd}) async {
     final now = tz.TZDateTime.now(tz.local);
 
     final startDateTime = tz.TZDateTime(
@@ -92,6 +123,8 @@ class LocalNotificationHelper {
       now.day,
       startTime.hour,
       startTime.minute,
+
+      //startTime.minute,
     );
     final endDateTime = tz.TZDateTime(
       tz.local,
@@ -99,18 +132,34 @@ class LocalNotificationHelper {
       now.month,
       now.day,
       endTime.hour,
-      endTime.minute,
+      0,
     );
     List<tz.TZDateTime> scheduledTimes = [];
-
+    tz.TZDateTime scheduleTime =
+        startDateTime.add(Duration(minutes: breakOccurrenceInMinutes));
     // If the start time is in the past, move it to the next cycle
-    tz.TZDateTime scheduleTime = startDateTime.isBefore(now)
-        ? startDateTime.add(Duration(minutes: breakOccurrenceInMinutes))
-        : startDateTime;
+    if (isForBreakEnd == true ) {
+      scheduleTime =
+          startDateTime.add(Duration(minutes: breakOccurrenceInMinutes));
+    } else {
+      while (scheduleTime.isBefore(now) ) {
+        scheduleTime = scheduleTime
+            .add(Duration(minutes: breakOccurrenceInMinutes))
+            .add(Duration(minutes: breakDuration!));
+        log('scheduleTime inside first while: $scheduleTime');
+      }
+    }
+
+    // tz.TZDateTime scheduleTime = startDateTime.isBefore(now)
+    //     ? startDateTime.add(Duration(minutes: breakOccurrenceInMinutes))
+    //     : startDateTime;
     // print(startDateTime);
     //   print(endDateTime);
-    //   print(scheduleTime);
-    //   print(breakOccurrenceInMinutes);
+
+    // isForBreakEnd == true
+    //     ? print('breakDuration: $scheduleTime')
+    //     : print('scheduleTime first time: $scheduleTime');
+    // //   print(breakOccurrenceInMinutes);
 
     try {
       final String? alarmUri =
@@ -122,14 +171,17 @@ class LocalNotificationHelper {
 
       final UriAndroidNotificationSound uriSound =
           UriAndroidNotificationSound(alarmUri);
-
+      print('scheduleTime: $scheduleTime');
+      print('endtime $endDateTime');
+      print('bool value is Before ${scheduleTime.isBefore(endDateTime)}');
+      print(isForBreakEnd);
       while (scheduleTime.isBefore(endDateTime)) {
         scheduledTimes.add(scheduleTime);
 
         await flutterLocalNotificationsPlugin.zonedSchedule(
             scheduleTime.millisecondsSinceEpoch
                 .remainder(1 << 31), // Unique ID for each notification
-            'Break Time Reminder',
+            scheduleTime.toString(),
             'Time for a break! Stay refreshed.',
             scheduleTime,
             NotificationDetails(
@@ -148,20 +200,26 @@ class LocalNotificationHelper {
             ),
             matchDateTimeComponents: DateTimeComponents.time,
             androidScheduleMode: AndroidScheduleMode.alarmClock);
+        print("isForBreakEnd $isForBreakEnd  ");
         if (isForBreakEnd == true) {
-          break;
+          await HiveHelper.breakEndNotificationTimeBox
+              .put('breakEndNotification', scheduleTime.toString());
+          print('scheduale in break scheds method $scheduleTime');
+          return;
         }
-// save notification expected time
-
         // Move to the next break time
-        scheduleTime =
-            scheduleTime.add(Duration(minutes: breakOccurrenceInMinutes));
+        scheduleTime = scheduleTime
+            .add(Duration(minutes: breakDuration!))
+            .add(Duration(minutes: breakOccurrenceInMinutes));
+        print('scheduleTime end while loooooooooooop: $scheduleTime');
       }
+      // print('scheduleTime: $scheduleTime');
       HiveHelper.notificationBox.addAll(scheduledTimes
           .map((tz.TZDateTime e) => NotificationModel(
               id: e.millisecondsSinceEpoch.remainder(1 << 31).toString(),
               scheduledTime: e.toString()))
           .toList());
+      print(scheduledTimes);
     } catch (e) {
       print('error in platform');
     }

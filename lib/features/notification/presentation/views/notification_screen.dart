@@ -1,24 +1,21 @@
-import 'package:break_time_reminder_app/core/theming/colors.dart';
-import 'package:break_time_reminder_app/core/theming/styles.dart';
-import 'package:break_time_reminder_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/helpers/hive_helper.dart';
-import '../../../../core/routing/routes.dart';
 import 'widgets/break_or_work_icon.dart';
 import 'widgets/break_or_work_text.dart';
 import 'widgets/ok_button.dart';
 
 class NotificationScreen extends StatelessWidget {
+  final bool isFromNotification;
   const NotificationScreen({
-    super.key,
+    super.key, required this.isFromNotification,
   });
 
   @override
   Widget build(BuildContext context) {
     final bool isBreakTime = HiveHelper.isBreakTimeBox.get('isBreakTime')!;
-
+    print('isBreakTime: $isBreakTime');
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -26,10 +23,8 @@ class NotificationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BreakOrWorkText(isBreakTime: isBreakTime),
-           
             BreakOrWorkIcon(isBreakTime: isBreakTime),
-           OkButton(),
-          
+            OkButton(isFromNotification: isFromNotification,),
           ],
         ),
       ),

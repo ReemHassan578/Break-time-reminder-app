@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theming/styles.dart';
 
@@ -19,11 +18,11 @@ class BreakOrWorkText extends StatelessWidget {
     //      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          isBreakTime ? "Time to Work!" : "Time for a Break!",
+          !isBreakTime ? "Time to Work!" : "Time for a Break!",
           style: MyTextStyles.font25BlackBoldPacificoFont,
         ),
          Text(
-              isBreakTime
+              !isBreakTime
                   ? "Focus on your tasks and stay productive."
                   : "Relax and recharge for better efficiency.",
               textAlign: TextAlign.center,
