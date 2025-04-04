@@ -82,7 +82,15 @@ class SetBreakTimeButton extends ConsumerWidget {
                   remainingTime = getRemainingTime(
                       HiveHelper.notificationBox.values.first.scheduledTime);
                   print('remainingTime  first schedule in hive $remainingTime');
-                } else {
+                } 
+                else if(!HiveHelper.hasScheduledNotification){
+ 
+  remainingTime = getRemainingTime(
+          endDateTime.toString());
+      print(' no coming notifications $remainingTime');
+      ref.read(timerProvider.notifier).startTimer(remainingTime);
+    }
+                else {
                   //     DateTime.now().add(Duration(minutes: breakOccurrence));
                   remainingTime = scheduleTime.difference(DateTime.now());
                 }

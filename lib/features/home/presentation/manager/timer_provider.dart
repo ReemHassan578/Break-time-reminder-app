@@ -28,7 +28,24 @@ final endDateTime = tz.TZDateTime(
           HiveHelper.notificationBox.values.first.scheduledTime);
       print(remainingTime);
       startTimer(remainingTime);
-    } else if (isBreakTime && (now.isBefore(endDateTime))) {
+    }
+    // no coming notifications 
+    else if(!HiveHelper.hasScheduledNotification){
+      final endTime = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      workSession.workTo,
+      0,
+    );
+ var remainingTime = getRemainingTime(
+          endTime.toString());
+      print(' no coming notifications $remainingTime');
+      startTimer(remainingTime);
+    }
+    
+    else if (isBreakTime && (now.isBefore(endDateTime))) {
     
          var remainingTime = getRemainingTime(
 //HiveHelper.notificationBox.values.first.scheduledTime
