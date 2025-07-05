@@ -7,13 +7,15 @@ import 'widgets/break_or_work_text.dart';
 import 'widgets/ok_button.dart';
 
 class NotificationScreen extends StatelessWidget {
-  final bool isFromNotification;
+  final bool? isEndHour;
   const NotificationScreen({
-    super.key, required this.isFromNotification,
+    super.key,
+   required this.isEndHour
   });
 
   @override
   Widget build(BuildContext context) {
+
     final bool isBreakTime = HiveHelper.isBreakTimeBox.get('isBreakTime')!;
     print('isBreakTime: $isBreakTime');
     return Scaffold(
@@ -22,9 +24,11 @@ class NotificationScreen extends StatelessWidget {
           spacing: 20.sp,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BreakOrWorkText(isBreakTime: isBreakTime),
+            BreakOrWorkText(isBreakTime: isBreakTime,isEndHour: isEndHour,),
             BreakOrWorkIcon(isBreakTime: isBreakTime),
-            OkButton(isFromNotification: isFromNotification,),
+            OkButton(
+              
+            ),
           ],
         ),
       ),

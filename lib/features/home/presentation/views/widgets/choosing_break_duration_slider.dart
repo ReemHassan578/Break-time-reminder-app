@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theming/styles.dart';
+import '../../manager/status_idle_or_not_provider.dart';
 import '../../manager/timer_provider.dart';
 
 class ChoosingBreakDurationSlider extends ConsumerWidget{
@@ -12,7 +13,8 @@ class ChoosingBreakDurationSlider extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     int breakDuration = ref.watch(breakDurationProvider);
-            var isTimerRunning = ref.watch(timerProvider).isRunning;
+            var timerRef = ref.watch(timerProvider);
+         bool   isSessionIdeal = ref.watch(statusIdleOrNotProvider);
 
     return Column(
       children: [
@@ -31,7 +33,7 @@ class ChoosingBreakDurationSlider extends ConsumerWidget{
  label: breakDuration >= 60
       ? "${breakDuration ~/ 60} hr ${breakDuration % 60} min"
       : "$breakDuration min",
-                onChanged: isTimerRunning?null:(value) {
+                onChanged: timerRef.isRunning || !isSessionIdeal?null:(value) {
             ref.read(breakDurationProvider.notifier).setBreakDuration(value.toInt());
           },
         ),

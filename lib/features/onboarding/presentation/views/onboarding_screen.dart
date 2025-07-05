@@ -15,7 +15,7 @@ class OnboardingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 20.h,
-          children: [
+          children: const [
             AnimatedLottieImageBox(),
             TextQuotes(),
             LetsGoFilledButton(),

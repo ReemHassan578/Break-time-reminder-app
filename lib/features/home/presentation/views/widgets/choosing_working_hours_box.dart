@@ -18,7 +18,7 @@ class ChoosingWorkingHoursBox extends StatelessWidget {
               letterSpacing: -2.w,
               fontWeight: FontWeight.w500),
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             WorkingHoursWheelList(type: 'from'),

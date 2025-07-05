@@ -5,13 +5,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'core/helpers/shared_variables.dart';
 import 'core/theming/colors.dart';
 
-class BreakTimeReminderApp extends StatelessWidget {
+class BreakTimeReminderApp extends StatefulWidget {
   final AppRouter appRouter;
    static  final GlobalKey<NavigatorState> navigatorKey= GlobalKey<NavigatorState>() ;
 
   const BreakTimeReminderApp({super.key, required this.appRouter,});
+
+  @override
+  State<BreakTimeReminderApp> createState() => _BreakTimeReminderAppState();
+}
+
+class _BreakTimeReminderAppState extends State<BreakTimeReminderApp> with WidgetsBindingObserver {
+   AppLifecycleState _appLifecycleState = AppLifecycleState.resumed;
+ @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+@override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _appLifecycleState = state;
+     isAppInForeground=_appLifecycleState == AppLifecycleState.resumed;
+    debugPrint('App lifecycle changed to: $_appLifecycleState');
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +50,7 @@ class BreakTimeReminderApp extends StatelessWidget {
         child: MaterialApp(
           builder: (context, child) {
             return Container(
-              decoration: BoxDecoration(
+              decoration:const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -46,9 +73,9 @@ class BreakTimeReminderApp extends StatelessWidget {
                 Colors.transparent, 
             useMaterial3: true,
           ),
-          navigatorKey:navigatorKey ,
+          navigatorKey:BreakTimeReminderApp.navigatorKey ,
           initialRoute: Routes.onBoardingScreen,
-          onGenerateRoute: appRouter.generateRoute,
+          onGenerateRoute: widget.appRouter.generateRoute,
         ),
       ),
     );

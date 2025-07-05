@@ -18,14 +18,14 @@ class AppRouter {
 case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return  HomeScreen();
+            return const HomeScreen();
           },
         );
         case Routes.notificationScreen:
         return MaterialPageRoute(
           builder: (context) {
             var args = settings.arguments as Map<String, dynamic>;
-            return  NotificationScreen(isFromNotification: args['isFromNotification'],);
+            return  NotificationScreen( isEndHour: args['isEndHour'],);
           },
         );
 

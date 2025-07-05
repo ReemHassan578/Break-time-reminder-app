@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../manager/status_idle_or_not_provider.dart';
 import '../../manager/timer_provider.dart';
 
 class WorkingHoursWheelList extends ConsumerStatefulWidget {
@@ -31,7 +32,8 @@ class _WorkingHoursWheelListState extends ConsumerState<WorkingHoursWheelList>{
 
   @override
   Widget build(BuildContext context) {
-        var isTimerRunning = ref.watch(timerProvider).isRunning;
+        var timerRef = ref.watch(timerProvider);
+       bool isSessionIdle = ref.watch(statusIdleOrNotProvider);
 
     return Expanded(
       child: Column(
@@ -47,7 +49,7 @@ class _WorkingHoursWheelListState extends ConsumerState<WorkingHoursWheelList>{
             child: ListWheelScrollView.useDelegate(
               controller: _scrollController,
               itemExtent: 40.h,
-              physics: isTimerRunning?NeverScrollableScrollPhysics():FixedExtentScrollPhysics(),
+              physics: timerRef.isRunning || !isSessionIdle?const NeverScrollableScrollPhysics():const FixedExtentScrollPhysics(),
               onSelectedItemChanged: (index) {
                 ref.read(workingHoursProvider.notifier).setWorkingHours(
                       type: widget.type,

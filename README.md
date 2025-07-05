@@ -5,26 +5,28 @@ A mobile application that enhances productivity by notifying users to take sched
 - Target Audience:
 Office workers - Students - Remote employees 
 
+
+
 - Features & UI Screens
 
-. Splash Screen
+. Splash Screen : contains app logo
+![alt text](image-1.png)
 
 
-
-. Onboarding Screens
-
-
+. Onboarding Screens : contains informative expressions on how app is useful
+![alt text](image.png)
 
 
-. Home Screen
-
-Displays upcoming break reminders.
-
-Option to manually start a break.
-
-Quick access to settings and history.
+. Main Screen
+![alt text](image-2.png)
 
 
+Choose break intervals (e.g., every 30 minutes, 1 hour)
 
-Choose break intervals (e.g., every 30 minutes, 1 hour).
+Choose start and end working times 
+
+set button to start timer and reset button to reset it 
+
+Displays screen when either break time is come or work time is come
+
 

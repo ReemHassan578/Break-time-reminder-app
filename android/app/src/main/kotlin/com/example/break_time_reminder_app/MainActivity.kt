@@ -13,7 +13,9 @@ import io.flutter.plugin.common.MethodChannel
 import java.util.*
 
 
+
 class MainActivity: FlutterActivity(){
+   
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "alarm").setMethodCallHandler { call, result ->
@@ -21,15 +23,18 @@ class MainActivity: FlutterActivity(){
             if ("getAlarmUri" == call.method) {
                 result.success(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString())
             }
+             if ("cancelAlarm" == call.method) {
+                 cancelAlarm();
+                    result.success("Alarm stopped");
+            }
         }
     }
 
-    private fun resourceToUriString(context: Context, resId: Int): String? {
-        return (ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                + context.resources.getResourcePackageName(resId)
-                + "/"
-                + context.resources.getResourceTypeName(resId)
-                + "/"
-                + context.resources.getResourceEntryName(resId))
+    private fun cancelAlarm(){
+val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+notificationManager.cancelAll()
+
     }
+
+    
 }

@@ -1,0 +1,1 @@
+bool isAppInForeground = true;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/helpers/hive_helper.dart';
@@ -14,10 +16,12 @@ class WorkingHoursNotifier extends StateNotifier<Map<String, int>> {
          int? workTo =
         HiveHelper.workSessionBox.get('session')?.workTo;
     state = {'from': workFrom ?? 0, 'to': workTo ?? 0};
+
     HiveHelper.workSessionBox.watch(key: 'session').listen((event) {
+   //   log('event: ${event.value.workFrom}');
       state = event.value == null
-          ? {'from': 0, 'to': 0}
-          : {'from': event.value!.workFrom, 'to': event.value!.workTo};
+          ? state
+          : {'from': state['from']!, 'to': state['to']!};
     });
 
  

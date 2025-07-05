@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'work_session_model.g.dart'; // Run `flutter pub run build_runner build` to generate this file
 
 @HiveType(typeId: 1)
-class WorkSessionModel {
+class WorkSessionModel extends HiveObject {
   @HiveField(0)
   final int workFrom;
 
@@ -18,9 +18,13 @@ class WorkSessionModel {
   // In minutes
   final int breakOccurrence;
 
-  WorkSessionModel( 
+  @HiveField(4)
+  bool isIdle;
+
+  WorkSessionModel(
       {required this.workFrom,
       required this.workTo,
+      required this.isIdle,
       required this.breakDuration,
       required this.breakOccurrence});
 }

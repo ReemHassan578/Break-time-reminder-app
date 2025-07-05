@@ -24,7 +24,7 @@ class TextQuotes extends StatelessWidget {
             Text(
               "Stay productive and healthy with scheduled break reminders.",
               style: MyTextStyles.font20BlackRegularPlayFairFont.copyWith(shadows: [
-                Shadow(
+                const Shadow(
                   blurRadius: 1,
                 ),
               ], height: 1.5.h, letterSpacing: 0.1.w, wordSpacing: 0.1.w),

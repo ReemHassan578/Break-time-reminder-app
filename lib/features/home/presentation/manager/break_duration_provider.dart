@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/helpers/hive_helper.dart';
@@ -18,7 +20,8 @@ class BreakDurationNotifier extends StateNotifier<int> {
         HiveHelper.workSessionBox.get('session')?.breakDuration;
     state = breakDuration ?? 20;
     HiveHelper.workSessionBox.watch(key: 'session').listen((event) {
-      state = event.value == null ? 20 : state;
+
+      state = event.value == null ? 20 : event.value.breakDuration;
     });
   }
 

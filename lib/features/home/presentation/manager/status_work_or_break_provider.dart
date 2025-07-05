@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/helpers/hive_helper.dart';
@@ -26,13 +28,6 @@ class StatusWorkOrBreakNotifier extends StateNotifier<StatusWorkOrBreak> {
     });
   }
 
-  void startWorking() {
-    state = StatusWorkOrBreak.working;
-  }
-
-  void startBreakTime() {
-    state = StatusWorkOrBreak.breakTime;
-  }
 }
 
 final statusWorkOrBreakProvider =

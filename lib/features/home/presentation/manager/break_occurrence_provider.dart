@@ -13,7 +13,7 @@ class BreakOccurrenceNotifier extends StateNotifier<int> {
     state = breakOccurrence ?? 30;
 
     HiveHelper.workSessionBox.watch(key: 'session').listen((event) {
-      state = event.value == null ? 30 : state;
+      state = event.value == null ? 30 : event.value.breakOccurrence;
     });
   }
 

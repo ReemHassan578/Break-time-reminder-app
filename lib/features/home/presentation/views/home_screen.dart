@@ -25,13 +25,13 @@ class HomeScreen extends StatelessWidget {
               //       spacing: 15.h,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CountDownTimer(),
-                ChoosingWorkingHoursBox(),
-                WorkOrBreakLottieImage(),
-                ChoosingBreakDurationSlider(),
+                const CountDownTimer(),
+                const ChoosingWorkingHoursBox(),
+                const WorkOrBreakLottieImage(),
+                const ChoosingBreakDurationSlider(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SetBreakTimeButton(),

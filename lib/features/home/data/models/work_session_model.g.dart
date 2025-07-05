@@ -19,6 +19,7 @@ class WorkSessionModelAdapter extends TypeAdapter<WorkSessionModel> {
     return WorkSessionModel(
       workFrom: fields[0] as int,
       workTo: fields[1] as int,
+      isIdle: fields[4] as bool,
       breakDuration: fields[2] as int,
       breakOccurrence: fields[3] as int,
     );
@@ -27,7 +28,7 @@ class WorkSessionModelAdapter extends TypeAdapter<WorkSessionModel> {
   @override
   void write(BinaryWriter writer, WorkSessionModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.workFrom)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class WorkSessionModelAdapter extends TypeAdapter<WorkSessionModel> {
       ..writeByte(2)
       ..write(obj.breakDuration)
       ..writeByte(3)
-      ..write(obj.breakOccurrence);
+      ..write(obj.breakOccurrence)
+      ..writeByte(4)
+      ..write(obj.isIdle);
   }
 
   @override
