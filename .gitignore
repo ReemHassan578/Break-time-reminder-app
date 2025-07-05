@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+assets/google_fonts/Pacifico/OFL.txt
+assets/google_fonts/Playfair_Display/OFL.txt
+assets/google_fonts/Sen/OFL.txt
+assets/google_fonts/Playfair_Display/README.txt
+assets/google_fonts/Sen/README.txt
